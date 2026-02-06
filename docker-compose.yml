@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: blizzint-postgres
+    platform: linux/amd64
+    environment:
+      POSTGRES_USER: blizzint
+      POSTGRES_PASSWORD: blizzint_dev_password
+      POSTGRES_DB: blizzint
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blizzint"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: blizzint-server
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: blizzint
+      DB_PASSWORD: blizzint_dev_password
+      DB_NAME: blizzint
+      JWT_SECRET: dev_jwt_secret_change_in_production
+      JWT_EXPIRES_IN: 7d
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "sleep 5 && npm run migrate && npm run seed && npm run dev"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: blizzint-client
+    environment:
+      REACT_APP_API_URL: http://localhost:3001
+      REACT_APP_MAPBOX_TOKEN: ${MAPBOX_TOKEN}
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
