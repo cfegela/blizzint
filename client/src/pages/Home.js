@@ -32,6 +32,55 @@ export default function Home() {
     loadResorts();
   }, [filters]);
 
+  // Zoom to fit resorts when country or state/province filter changes
+  useEffect(() => {
+    if (resorts.length === 0) return;
+
+    // Only zoom if there's a country or state filter active
+    if (!filters.country && !filters.state_province) {
+      // Reset to default view when filters are cleared
+      setViewState({
+        longitude: -98.5,
+        latitude: 39.8,
+        zoom: 3.5,
+      });
+      return;
+    }
+
+    // Calculate bounds from filtered resorts
+    const lngs = resorts.map(r => parseFloat(r.longitude));
+    const lats = resorts.map(r => parseFloat(r.latitude));
+
+    const minLng = Math.min(...lngs);
+    const maxLng = Math.max(...lngs);
+    const minLat = Math.min(...lats);
+    const maxLat = Math.max(...lats);
+
+    // Calculate center
+    const centerLng = (minLng + maxLng) / 2;
+    const centerLat = (minLat + maxLat) / 2;
+
+    // Calculate appropriate zoom level based on bounds
+    const lngDiff = maxLng - minLng;
+    const latDiff = maxLat - minLat;
+    const maxDiff = Math.max(lngDiff, latDiff);
+
+    let zoom;
+    if (maxDiff > 50) zoom = 3;
+    else if (maxDiff > 20) zoom = 4;
+    else if (maxDiff > 10) zoom = 5;
+    else if (maxDiff > 5) zoom = 6;
+    else if (maxDiff > 2) zoom = 7;
+    else zoom = 8;
+
+    setViewState({
+      longitude: centerLng,
+      latitude: centerLat,
+      zoom,
+      transitionDuration: 1000,
+    });
+  }, [resorts, filters.country, filters.state_province]);
+
   return (
     <Container fluid className="p-0" style={{ height: 'calc(100vh - 56px)' }}>
       <Row className="g-0 h-100">
