@@ -14,8 +14,8 @@ export default function Home() {
   const [filters, setFilters] = useState({});
   const [selectedResort, setSelectedResort] = useState(null);
   const [viewState, setViewState] = useState({
-    longitude: -98.5,
-    latitude: 39.8,
+    longitude: -95.9345,
+    latitude: 41.2565,
     zoom: 3.5,
   });
 
@@ -40,8 +40,8 @@ export default function Home() {
     if (!filters.country && !filters.state_province) {
       // Reset to default view when filters are cleared
       setViewState({
-        longitude: -98.5,
-        latitude: 39.8,
+        longitude: -95.9345,
+        latitude: 41.2565,
         zoom: 3.5,
       });
       return;
