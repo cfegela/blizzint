@@ -84,10 +84,10 @@ export default function Home() {
   return (
     <Container fluid className="p-0" style={{ height: 'calc(100vh - 56px)' }}>
       <Row className="g-0 h-100">
-        <Col md={3} lg={2} className="border-end" style={{ maxHeight: '100%', overflowY: 'auto' }}>
+        <Col md={3} lg={2} className="border-end d-none d-md-block" style={{ maxHeight: '100%', overflowY: 'auto' }}>
           <FilterPanel filters={filters} onFilterChange={setFilters} onReset={() => setFilters({})} />
         </Col>
-        <Col md={9} lg={10}>
+        <Col xs={12} md={9} lg={10}>
           <Map
             {...viewState}
             onMove={(evt) => setViewState(evt.viewState)}

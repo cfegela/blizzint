@@ -25,9 +25,14 @@ export default function Header() {
             <Navbar.Collapse id="navbar-nav">
               <Nav className="ms-auto">
                 {isAdmin && (
-                  <Nav.Link as={Link} to="/admin" className="text-white" style={{ fontWeight: 500 }}>
-                    Settings
-                  </Nav.Link>
+                  <>
+                    <Nav.Link as={Link} to="/admin" className="text-white" style={{ fontWeight: 500 }}>
+                      Resorts
+                    </Nav.Link>
+                    <Nav.Link as={Link} to="/users" className="text-white" style={{ fontWeight: 500 }}>
+                      Users
+                    </Nav.Link>
+                  </>
                 )}
                 <Nav.Link href="#" onClick={handleLogout} className="text-white" style={{ fontWeight: 500 }}>
                   Logout

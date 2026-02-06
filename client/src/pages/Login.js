@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import ResortMarker from '../components/ResortMarker';
@@ -69,10 +69,6 @@ export default function Login() {
                   {loading ? 'Logging in...' : 'Login'}
                 </Button>
               </Form>
-
-              <p className="text-center mt-3 mb-0">
-                Don't have an account? <Link to="/register">Sign up</Link>
-              </p>
             </Card.Body>
           </Card>
         </Col>

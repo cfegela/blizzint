@@ -3,23 +3,22 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import Home from './pages/Home';
 import ResortDetail from './pages/ResortDetail';
 import Admin from './pages/Admin';
+import UserManagement from './pages/UserManagement';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function AppContent() {
   const location = useLocation();
-  const hideHeader = ['/login', '/register'].includes(location.pathname);
+  const hideHeader = ['/login'].includes(location.pathname);
 
   return (
     <div className="App">
       {!hideHeader && <Header />}
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route
           path="/"
           element={
@@ -41,6 +40,14 @@ function AppContent() {
           element={
             <ProtectedRoute adminOnly>
               <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute adminOnly>
+              <UserManagement />
             </ProtectedRoute>
           }
         />
