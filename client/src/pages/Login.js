@@ -36,7 +36,7 @@ export default function Login() {
               <div className="text-center mb-4">
                 <div className="d-flex align-items-center justify-content-center mb-2">
                   <ResortMarker size={40} />
-                  <h1 className="h3 mb-0 ms-2" style={{ color: '#000044', fontWeight: 600 }}>Blizzint</h1>
+                  <h1 className="h3 mb-0 ms-2" style={{ color: '#000044', fontWeight: 600 }}>BlizzInt</h1>
                 </div>
                 <p className="text-muted">Your express lane to the deepest pow</p>
               </div>

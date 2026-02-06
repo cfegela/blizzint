@@ -1,4 +1,4 @@
-# Blizzint - Global Ski Resort Mapping Application
+# BlizzInt - Global Ski Resort Mapping Application
 
 **Your express lane to the deepest pow**
 

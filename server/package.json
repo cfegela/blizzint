@@ -1,7 +1,7 @@
 {
   "name": "blizzint-server",
   "version": "1.0.0",
-  "description": "Backend API for Blizzint ski resort mapping application",
+  "description": "Backend API for BlizzInt ski resort mapping application",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",

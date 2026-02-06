@@ -161,7 +161,7 @@ export default function UserManagement() {
   return (
     <Container className="py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>User Management</h2>
+        <h4 style={{ fontWeight: 700, marginBottom: 0 }}>User Management</h4>
         <div>
           <Button variant="primary" onClick={() => handleShowModal()} className="me-2">
             Create User

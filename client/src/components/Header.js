@@ -17,7 +17,7 @@ export default function Header() {
     <Navbar variant="dark" expand="lg" style={{ backgroundColor: '#000044' }}>
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center" style={{ fontWeight: 600 }}>
-          <ResortMarker size={28} /> <span className="ms-2">Blizzint</span>
+          <ResortMarker size={28} /> <span className="ms-2">BlizzInt</span>
         </Navbar.Brand>
         {user && (
           <>

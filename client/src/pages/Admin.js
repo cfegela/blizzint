@@ -245,7 +245,7 @@ export default function Admin() {
   return (
     <Container className="py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Resort Management</h2>
+        <h4 style={{ fontWeight: 700, marginBottom: 0 }}>Resort Management</h4>
         <div className="d-flex gap-2">
           <Button variant="primary" onClick={() => handleShowModal()}>
             Add Resort

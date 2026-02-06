@@ -10,7 +10,7 @@ router.use('/resorts', resortsRoutes);
 router.use('/users', usersRoutes);
 
 router.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Blizzint API is running' });
+  res.json({ status: 'ok', message: 'BlizzInt API is running' });
 });
 
 module.exports = router;
