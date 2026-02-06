@@ -16,7 +16,7 @@ const COUNTRIES = [
 ];
 
 const US_STATES = [
-  'Alaska', 'California', 'Colorado', 'Idaho', 'Maine', 'Montana',
+  'Alaska', 'Arizona', 'California', 'Colorado', 'Idaho', 'Maine', 'Montana',
   'New Hampshire', 'New Mexico', 'Oregon', 'Utah', 'Vermont',
   'Washington', 'Wyoming',
 ];
@@ -26,7 +26,19 @@ const PASS_TYPES = ['Epic', 'Ikon', 'Indy', 'None'];
 
 export default function FilterPanel({ filters, onFilterChange, onReset }) {
   const handleChange = (field, value) => {
-    onFilterChange({ ...filters, [field]: value || undefined });
+    const newFilters = { ...filters, [field]: value || undefined };
+
+    // Clear state/province when country is selected
+    if (field === 'country' && value) {
+      delete newFilters.state_province;
+    }
+
+    // Clear country when state/province is selected
+    if (field === 'state_province' && value) {
+      delete newFilters.country;
+    }
+
+    onFilterChange(newFilters);
   };
 
   const stateProvinces = filters.country === 'US'
