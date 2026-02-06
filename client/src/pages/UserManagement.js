@@ -166,9 +166,9 @@ export default function UserManagement() {
           <Button variant="primary" onClick={() => handleShowModal()} className="me-2">
             Create User
           </Button>
-          <Link to="/" className="btn btn-outline-secondary">
+          <Button variant="secondary" as={Link} to="/">
             Back
-          </Link>
+          </Button>
         </div>
       </div>
 

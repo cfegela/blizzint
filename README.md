@@ -6,14 +6,16 @@ An interactive full-stack application that maps ski resorts across North America
 
 ## Features
 
-- **Interactive Global Map**: Mapbox-powered map with custom snowflake hexagon markers showing 77+ resorts worldwide
-- **Advanced Search & Filtering**: Filter by country, state/province, pass type, elevation, vertical drop, trail count, and night skiing
+- **Interactive Global Map**: Mapbox-powered map with custom snowflake hexagon markers showing 78 resorts worldwide
+- **Smart Filtering**: Filter by country, state/province, pass type, and vertical drop with auto-zoom to filtered regions
+- **Mutually Exclusive Filters**: Country and state/province filters automatically reset each other for logical filtering
 - **Spatial Queries**: Find resorts within a specific radius using PostGIS spatial queries
 - **Resort Details**: Comprehensive information including stats, terrain breakdown, amenities, and contact info
 - **JWT Authentication**: Secure user authentication with role-based access control
-- **Admin Panel**: Full CRUD operations with sortable tables and modal forms for managing resort data
+- **Admin-Only User Management**: Centralized user creation and management (no public registration)
+- **Admin Panels**: Separate sortable tables for managing resorts and users with CRUD operations
 - **Custom Dark Theme**: Professional navy theme (#000044) with enhanced typography and responsive design
-- **Responsive UI**: Mobile-friendly interface with collapsible navigation and optimized layouts
+- **Fully Responsive**: Mobile-optimized with collapsible navbar, hidden filter panel on small screens, and touch-friendly controls
 
 ## Tech Stack
 
@@ -75,54 +77,61 @@ This will:
 - **Email**: admin@blizzint.com
 - **Password**: admin123
 
+**Note**: Public user registration is disabled. Only admins can create new users via the User Management page. Login with the admin credentials above to access the user management interface.
+
 ## API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` - Create new account
-- `POST /api/auth/login` - Login
-- `GET /api/auth/profile` - Get current user (requires JWT)
+- `POST /api/auth/login` - Login and receive JWT token
+- `GET /api/auth/profile` - Get current user profile (requires JWT)
 
 ### Resorts
 - `GET /api/resorts` - List resorts (supports filters and pagination)
 - `GET /api/resorts/search?q=<query>` - Search resorts by name
 - `GET /api/resorts/nearby?lat=<lat>&lng=<lng>&radius_miles=<miles>` - Spatial query
-- `GET /api/resorts/:idOrSlug` - Get single resort
+- `GET /api/resorts/:idOrSlug` - Get single resort by ID or slug
 - `POST /api/resorts` - Create resort (admin only)
 - `PUT /api/resorts/:id` - Update resort (admin only)
 - `DELETE /api/resorts/:id` - Delete resort (admin only)
 
+### User Management (Admin Only)
+- `GET /api/users` - List all users
+- `POST /api/users` - Create new user with role assignment
+- `PUT /api/users/:id` - Update user (name, email, password, role)
+- `DELETE /api/users/:id` - Delete user (cannot delete self)
+
 ### Filter Parameters
 
 The `GET /api/resorts` endpoint supports:
-- `country` - Filter by country code (US, CA, FR, CH, AT, IT, DE, AD, NO, SE, CL, AR)
-- `state_province` - Filter by state/province
+- `country` - Filter by country code (US, CA, FR, CH, AT, IT, DE, AD, NO, SE, CL, AR) - mutually exclusive with state_province
+- `state_province` - Filter by state/province - mutually exclusive with country
 - `pass_type` - Filter by pass type (Epic, Ikon, Indy, None)
-- `min_elevation` - Minimum summit elevation in feet
-- `max_elevation` - Maximum summit elevation in feet
 - `min_vertical_drop` - Minimum vertical drop in feet
-- `min_trail_count` - Minimum number of trails
-- `night_skiing` - Filter resorts with night skiing (true/false)
 - `sort_by` - Sort field (name, summit_elevation_ft, vertical_drop_ft, trail_count, etc.)
 - `sort_order` - Sort direction (asc/desc)
 - `page` - Page number (default: 1)
 - `limit` - Results per page (default: 100)
 
+**Note**: Country and state/province filters are mutually exclusive - selecting one automatically clears the other. The map automatically zooms to fit the filtered resorts.
+
 ## UI/UX Design
 
 ### Custom Theme
 - **Primary Color**: #000044 (dark navy) - used for navbar, buttons, links, and brand elements
-- **Navbar**: Custom dark background with semi-bold fonts (600 weight) and collapsible hamburger menu on mobile
-- **Typography**: Enhanced font weights for better hierarchy and readability
-- **Icons**: Custom SVG snowflake hexagon markers for resort locations
+- **Navbar**: Custom dark background with semi-bold fonts (600 weight), collapsible hamburger menu with white icon (no border/outline)
+- **Typography**: Enhanced font weights (600 for labels, 500 for links) for better hierarchy and readability
+- **Icons**: Custom SVG snowflake hexagon markers (#000044 background, white snowflake) for resort locations
 - **Responsive**: Bootstrap-based responsive grid with mobile-optimized layouts
 
 ### Key Components
-- **Login/Register Pages**: Centered forms with custom branding, tagline "Your express lane to the deepest pow"
-- **Map View**: Full-screen Mapbox map showing continental US by default, with interactive resort markers
-- **Filter Panel**: Collapsible sidebar with filters for country, state, pass type, elevation, trails, and more
-- **Resort Popups**: Clean popups with resort name, location, and "Details" link
-- **Admin Panel**: Sortable table with bold resort names, fixed-width action buttons, and modal forms
+- **Login Page**: Centered form with custom branding, tagline "Your express lane to the deepest pow" (no public registration)
+- **Map View**: Full-screen Mapbox map showing continental US by default, with interactive resort markers and auto-zoom on filter selection
+- **Filter Panel**: Sidebar with streamlined filters (country, state/province, pass type, min vertical drop) - hidden on mobile screens (< 768px width)
+- **Resort Popups**: Minimal popups with resort name, location, and "Details" link (no close button or stats)
+- **Resort Management**: Sortable table with bold resort names, fixed-width action buttons (70px), and modal forms for CRUD operations
+- **User Management**: Admin-only page with sortable user table, role badges (user/admin), and create/edit/delete functionality
 - **Resort Detail Page**: Header map (no marker), detailed stats, trail breakdown, amenities, and contact info
+- **Admin Navigation**: "Resorts" and "Users" links in navbar (admin only)
 
 ## Project Structure
 
@@ -138,11 +147,11 @@ blizzint/
 │   │   ├── context/
 │   │   │   └── AuthContext.js   # JWT auth state
 │   │   ├── pages/               # Route pages
-│   │   │   ├── Home.js          # Map view
+│   │   │   ├── Home.js          # Map view with filters
 │   │   │   ├── Login.js         # Login form
-│   │   │   ├── Register.js      # Registration form
 │   │   │   ├── ResortDetail.js  # Resort details
-│   │   │   └── Admin.js         # Admin panel
+│   │   │   ├── Admin.js         # Resort management (admin)
+│   │   │   └── UserManagement.js # User management (admin)
 │   │   ├── services/
 │   │   │   └── api.js           # Axios client
 │   │   ├── App.js               # Main app with routing
@@ -162,14 +171,18 @@ blizzint/
 │   │   │   ├── adminOnly.js     # Admin check
 │   │   │   └── errorHandler.js  # Error handling
 │   │   ├── routes/              # API routes
+│   │   │   ├── index.js         # Route aggregator
 │   │   │   ├── auth.routes.js   # Auth endpoints
-│   │   │   └── resorts.routes.js # Resort endpoints
+│   │   │   ├── resorts.routes.js # Resort endpoints
+│   │   │   └── users.routes.js  # User management (admin)
 │   │   ├── controllers/         # Request handlers
 │   │   │   ├── auth.controller.js
-│   │   │   └── resorts.controller.js
+│   │   │   ├── resorts.controller.js
+│   │   │   └── users.controller.js
 │   │   ├── services/            # Business logic
 │   │   │   ├── auth.service.js  # Auth logic
-│   │   │   └── resorts.service.js # Resort queries
+│   │   │   ├── resorts.service.js # Resort queries
+│   │   │   └── users.service.js # User CRUD operations
 │   │   ├── app.js               # Express setup
 │   │   └── index.js             # Server entry point
 │   ├── db/
@@ -181,7 +194,7 @@ blizzint/
 │   │   │   ├── 001_seed_admin_user.js
 │   │   │   └── 002_seed_ski_resorts.js
 │   │   └── data/
-│   │       └── ski_resorts.json # 77 resorts data
+│   │       └── ski_resorts.json # 78 resorts data
 │   ├── Dockerfile               # Backend container
 │   ├── knexfile.js              # Knex configuration
 │   └── package.json             # Dependencies
@@ -253,16 +266,16 @@ npm run seed          # Seed database
 
 ## Data
 
-The application includes seed data for **77 ski resorts** across three continents:
+The application includes seed data for **78 ski resorts** across three continents:
 
-### North America (37 resorts)
-**United States (32)**
+### North America (38 resorts)
+**United States (33)**
 - **Rocky Mountains**: Vail, Aspen, Breckenridge, Telluride, Steamboat (Colorado); Park City, Alta, Deer Valley, Snowbird (Utah); Jackson Hole (Wyoming); Big Sky (Montana); Sun Valley (Idaho)
 - **West Coast**: Mammoth Mountain, Heavenly, Palisades Tahoe (California/Nevada)
 - **Pacific Northwest**: Mt. Bachelor (Oregon); Alyeska (Alaska)
 - **Northeast**: Killington, Stowe, Sugarbush (Vermont); Sunday River (Maine)
 - **Midwest**: Granite Peak, Wilmot (Wisconsin); Boyne Mountain, Nub's Nob (Michigan); Lutsen Mountains (Minnesota)
-- **Southwest**: Taos (New Mexico)
+- **Southwest**: Taos (New Mexico); Arizona Snowbowl (Arizona)
 
 **Canada (5)**: Whistler Blackcomb, Revelstoke (British Columbia); Banff Sunshine, Lake Louise (Alberta); Tremblant (Quebec)
 

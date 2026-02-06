@@ -62,7 +62,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
             value={filters.country || ''}
             onChange={(e) => handleChange('country', e.target.value)}
           >
-            <option value="">All Countries</option>
+            <option value="">Any</option>
             {COUNTRIES.map((c) => (
               <option key={c.code} value={c.code}>{c.name}</option>
             ))}
@@ -76,7 +76,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
             value={filters.state_province || ''}
             onChange={(e) => handleChange('state_province', e.target.value)}
           >
-            <option value="">All States/Provinces</option>
+            <option value="">Any</option>
             {stateProvinces.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
@@ -90,7 +90,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
             value={filters.pass_type || ''}
             onChange={(e) => handleChange('pass_type', e.target.value)}
           >
-            <option value="">All Pass Types</option>
+            <option value="">Any</option>
             {PASS_TYPES.map((p) => (
               <option key={p} value={p}>{p}</option>
             ))}
