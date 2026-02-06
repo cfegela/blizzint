@@ -44,7 +44,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
 
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label className="small">Country</Form.Label>
+          <Form.Label className="small" style={{ fontWeight: 600 }}>Country</Form.Label>
           <Form.Select
             size="sm"
             value={filters.country || ''}
@@ -58,7 +58,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label className="small">State/Province</Form.Label>
+          <Form.Label className="small" style={{ fontWeight: 600 }}>State/Province</Form.Label>
           <Form.Select
             size="sm"
             value={filters.state_province || ''}
@@ -72,7 +72,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label className="small">Pass Type</Form.Label>
+          <Form.Label className="small" style={{ fontWeight: 600 }}>Pass Type</Form.Label>
           <Form.Select
             size="sm"
             value={filters.pass_type || ''}
@@ -86,18 +86,7 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label className="small">Min Elevation (ft)</Form.Label>
-          <Form.Control
-            type="number"
-            size="sm"
-            placeholder="e.g., 10000"
-            value={filters.min_elevation || ''}
-            onChange={(e) => handleChange('min_elevation', e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label className="small">Min Vertical Drop (ft)</Form.Label>
+          <Form.Label className="small" style={{ fontWeight: 600 }}>Min Vertical Drop (ft)</Form.Label>
           <Form.Control
             type="number"
             size="sm"
@@ -106,25 +95,6 @@ export default function FilterPanel({ filters, onFilterChange, onReset }) {
             onChange={(e) => handleChange('min_vertical_drop', e.target.value)}
           />
         </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label className="small">Min Trail Count</Form.Label>
-          <Form.Control
-            type="number"
-            size="sm"
-            placeholder="e.g., 100"
-            value={filters.min_trail_count || ''}
-            onChange={(e) => handleChange('min_trail_count', e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Check
-          type="checkbox"
-          label="Night Skiing Only"
-          checked={filters.night_skiing || false}
-          onChange={(e) => handleChange('night_skiing', e.target.checked || undefined)}
-          className="small"
-        />
       </Form>
     </div>
   );
