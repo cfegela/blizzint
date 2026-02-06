@@ -381,7 +381,12 @@ export default function Admin() {
                 value={formData.latitude}
                 onChange={(e) => handleChange('latitude', e.target.value)}
                 required
+                min="-90"
+                max="90"
               />
+              <Form.Text className="text-muted">
+                Range: -90 to 90 (e.g., 39.6403 for Colorado, -33.35 for Chile)
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -392,7 +397,12 @@ export default function Admin() {
                 value={formData.longitude}
                 onChange={(e) => handleChange('longitude', e.target.value)}
                 required
+                min="-180"
+                max="180"
               />
+              <Form.Text className="text-muted">
+                Range: -180 to 180. USA/Americas use negative values (e.g., -106.37 for Colorado)
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3">
