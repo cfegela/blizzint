@@ -17,8 +17,7 @@ const COUNTRIES = [
 
 const US_STATES = [
   'Alaska', 'Arizona', 'California', 'Colorado', 'Idaho', 'Maine', 'Montana',
-  'New Hampshire', 'New Mexico', 'Oregon', 'Utah', 'Vermont',
-  'Washington', 'Wyoming',
+  'New Mexico', 'Oregon', 'Utah', 'Vermont', 'Washington', 'Wyoming',
 ];
 
 const CANADIAN_PROVINCES = ['Alberta', 'British Columbia', 'Quebec', 'Ontario'];
