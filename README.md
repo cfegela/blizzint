@@ -74,7 +74,7 @@ This will:
 
 ### Default Admin Credentials
 
-- **Email**: admin@blizzint.com
+- **Email**: admin@blizzint.app
 - **Password**: admin123
 
 **Note**: Public user registration is disabled. Only admins can create new users via the User Management page. Login with the admin credentials above to access the user management interface.

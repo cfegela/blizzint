@@ -9,7 +9,7 @@ exports.seed = async function(knex) {
 
   await knex('users').insert([
     {
-      email: 'admin@blizzint.com',
+      email: 'admin@blizzint.app',
       password_hash: passwordHash,
       name: 'Admin User',
       role: 'admin',
