@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { Container, Row, Col, Card, Badge, Spinner, Alert } from 'react-bootstrap';
 import Map from 'react-map-gl';
 import { resortsAPI } from '../services/api';
@@ -9,6 +9,7 @@ const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
 export default function ResortDetail() {
   const { slug } = useParams();
+  const location = useLocation();
   const [resort, setResort] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,7 +42,9 @@ export default function ResortDetail() {
     return (
       <Container className="mt-4">
         <Alert variant="danger">{error}</Alert>
-        <Link to="/" className="btn btn-primary">Back to Map</Link>
+        <Link to="/" state={{ mapViewState: location.state?.mapViewState }} className="btn btn-primary">
+          Back to Map
+        </Link>
       </Container>
     );
   }
@@ -68,7 +71,9 @@ export default function ResortDetail() {
         <Row>
           <Col md={8}>
             <div className="mb-3">
-              <Link to="/" className="btn btn-outline-primary btn-sm">← Back to Map</Link>
+              <Link to="/" state={{ mapViewState: location.state?.mapViewState }} className="btn btn-outline-primary btn-sm">
+                ← Back to Map
+              </Link>
             </div>
 
             <h1 className="mb-2">{resort.name}</h1>

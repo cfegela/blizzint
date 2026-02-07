@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Map, { Marker, Popup } from 'react-map-gl';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { resortsAPI } from '../services/api';
 import FilterPanel from '../components/FilterPanel';
 import ResortMarker from '../components/ResortMarker';
@@ -9,15 +9,21 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
+const DEFAULT_VIEW_STATE = {
+  longitude: -95.9345,
+  latitude: 41.2565,
+  zoom: 3.5,
+};
+
 export default function Home() {
+  const location = useLocation();
   const [resorts, setResorts] = useState([]);
   const [filters, setFilters] = useState({});
   const [selectedResort, setSelectedResort] = useState(null);
-  const [viewState, setViewState] = useState({
-    longitude: -95.9345,
-    latitude: 41.2565,
-    zoom: 3.5,
-  });
+  const [viewState, setViewState] = useState(
+    location.state?.mapViewState || DEFAULT_VIEW_STATE
+  );
+  const [hasRestoredView, setHasRestoredView] = useState(!!location.state?.mapViewState);
 
   useEffect(() => {
     const loadResorts = async () => {
@@ -36,14 +42,16 @@ export default function Home() {
   useEffect(() => {
     if (resorts.length === 0) return;
 
+    // Don't auto-zoom if we just restored a saved view
+    if (hasRestoredView) {
+      setHasRestoredView(false);
+      return;
+    }
+
     // Only zoom if there's a country or state filter active
     if (!filters.country && !filters.state_province) {
       // Reset to default view when filters are cleared
-      setViewState({
-        longitude: -95.9345,
-        latitude: 41.2565,
-        zoom: 3.5,
-      });
+      setViewState(DEFAULT_VIEW_STATE);
       return;
     }
 
@@ -124,7 +132,11 @@ export default function Home() {
                     {selectedResort.state_province && `${selectedResort.state_province}, `}
                     {selectedResort.country}
                   </p>
-                  <Link to={`/resorts/${selectedResort.slug}`} style={{ fontWeight: 600, fontSize: '.8rem', color: '#000044' }}>
+                  <Link
+                    to={`/resorts/${selectedResort.slug}`}
+                    state={{ mapViewState: viewState }}
+                    style={{ fontWeight: 600, fontSize: '.8rem', color: '#000044' }}
+                  >
                     Details
                   </Link>
                 </div>
