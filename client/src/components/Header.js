@@ -13,10 +13,15 @@ export default function Header() {
     navigate('/login');
   };
 
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    navigate('/', { replace: true, state: null });
+  };
+
   return (
     <Navbar variant="dark" expand="lg" style={{ backgroundColor: '#000044' }}>
       <Container fluid>
-        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center" style={{ fontWeight: 600 }}>
+        <Navbar.Brand href="/" onClick={handleHomeClick} className="d-flex align-items-center" style={{ fontWeight: 600, cursor: 'pointer' }}>
           <ResortMarker size={28} /> <span className="ms-2">BlizzInt</span>
         </Navbar.Brand>
         {user && (
