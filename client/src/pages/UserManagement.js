@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Table, Button, Modal, Form, Alert, Spinner } from 'react-bootstrap';
-import { authAPI } from '../services/api';
 import api from '../services/api';
 
 export default function UserManagement() {

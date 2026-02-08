@@ -87,7 +87,7 @@ export default function Home() {
       zoom,
       transitionDuration: 1000,
     });
-  }, [resorts, filters.country, filters.state_province]);
+  }, [resorts, filters.country, filters.state_province, hasRestoredView]);
 
   return (
     <Container fluid className="p-0" style={{ height: 'calc(100vh - 56px)' }}>
