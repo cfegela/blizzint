@@ -28,10 +28,10 @@ export default function Login() {
   };
 
   return (
-    <Container fluid className="vh-100 d-flex align-items-start justify-content-center bg-light" style={{ paddingTop: '10vh' }}>
+    <Container fluid className="vh-100 d-flex align-items-start justify-content-center bg-light px-3" style={{ paddingTop: '10vh' }}>
       <Row>
         <Col md={12}>
-          <Card style={{ width: '400px' }} className="shadow">
+          <Card style={{ width: '100%', maxWidth: '400px' }} className="shadow">
             <Card.Body>
               <div className="text-center mb-4">
                 <div className="d-flex align-items-center justify-content-center mb-2">
