@@ -4,12 +4,6 @@
 
 An interactive full-stack application that maps ski resorts across North America, Europe, and South America with advanced filtering, spatial queries, and admin management.
 
-## Live Production Deployment
-
-🌐 **Frontend**: https://demo.blizzint.app
-🔌 **API**: https://api.blizzint.app
-👤 **Admin Login**: admin@blizzint.app / admin123
-
 ## Features
 
 - **Interactive Global Map**: Mapbox-powered map with custom snowflake hexagon markers showing 78 resorts worldwide
