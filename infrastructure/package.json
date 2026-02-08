@@ -1,0 +1,25 @@
+{
+  "name": "blizzint-infrastructure",
+  "version": "1.0.0",
+  "description": "AWS CDK infrastructure for BlizzInt application",
+  "bin": {
+    "infrastructure": "bin/app.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "deploy": "cdk deploy --all",
+    "diff": "cdk diff",
+    "synth": "cdk synth"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "aws-cdk": "^2.133.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.133.0",
+    "constructs": "^10.3.0"
+  }
+}
